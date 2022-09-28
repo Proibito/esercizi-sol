@@ -1,6 +1,9 @@
 #include<stdio.h>
 #define LUNGH 7     //perchè la stringa è fatta da 7 numeri
 
+//-----COMPLETO E FUNZIONANTE-----//
+//poco ottimizzato
+
 int main()
 {
 
@@ -41,6 +44,7 @@ int main()
    
     char stringa[100];
     long n[LUNGH];
+    printf("Inserisci i numeri da stampare:\n");
     for(int i=0;i<LUNGH;i++)
     {
         fgets(stringa, sizeof(stringa), stdin);
@@ -50,13 +54,16 @@ int main()
     for(int i=0;i<LUNGH;i++)
     {
         if(n[i]%2==1)
-            printf("%ld", n[i]);
+            printf("%ld ", n[i]);
     }
     for(int i=0;i<LUNGH;i++)
     {
         if(n[i]%2==0)
-            printf("%ld", n[i]);
+            printf("%ld ", n[i]);
     }
 
+    //Risolto in modo poco ottimizzato ma risolto
+
+    printf("\n");
     return 0;
 }
