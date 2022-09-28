@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<string.h>
 
 int main()
 {
@@ -21,16 +22,19 @@ int main()
     }
     s2[i]='\0';
 
-    for(i2=0;s1[i2]!='\0';i2++)
+    for(i2=0;s1[i2]!='\0'||j==strlen(s2)-1;i2++)
     {
         i=i2;
+        j=0;
         while(s1[i]==s2[j])
         {
+            printf("\nTrovati %c e %c uguali", s1[i], s2[j]);
             i++, j++;
         }
-        if(j==strlen(s2))           //devo mettere il +1?
+        if(j==strlen(s2)-1)           //devo mettere il +1?
             break;
     }
+    printf("\n%s", &s1[i2+j]);
 
     printf("\n");
     return 0;
