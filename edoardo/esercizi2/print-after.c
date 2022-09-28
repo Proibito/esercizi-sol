@@ -48,10 +48,12 @@ int main()
         }
         if (lunghezza == indiceFineRiga)
         {
-            printf("trovato: %s \n", &s1[i+lunghezza]);
+            printf("trovato: %s \n", &s1[i + lunghezza]);
             break;
         }
     }
+    // ancora e ancora
 
+    // lo sto modificando
     return 0;
 }
