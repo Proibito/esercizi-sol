@@ -1,4 +1,5 @@
 #include<stdio.h>
+#define LUNGH 7     //perchè la stringa è fatta da 7 numeri
 
 int main()
 {
@@ -14,14 +15,16 @@ int main()
         -
     */
 
-    char s[100];
+    /*
+    VECCHIA VERSIONE
+    char stringa[100];
     long n;
     long vet[50];
     int pos_vet=0;
-    fgets(s, sizeof(s), stdin);
-    while(s!='\0')
+    fgets(stringa, sizeof(stringa), stdin);
+    while(stringa!='\0')
     {
-        if(strtol(s, null, 10)%2==1)
+        if(strtol(stringa, null, 10)%2==1)
         {
             printf("%l", n);
         }
@@ -30,9 +33,30 @@ int main()
             vet[pos_vet] = 
             pos_vet++;
         }
-        fgets(s, sizeof(s), stdin);
+        fgets(stringa, sizeof(stringa), stdin);
     }
     
     return 0;
+    */
+   
+    char stringa[100];
+    long n[LUNGH];
+    for(int i=0;i<LUNGH;i++)
+    {
+        fgets(stringa, sizeof(stringa), stdin);
+        n[i] = strtol(stringa, NULL, 10);
+    }
 
+    for(int i=0;i<LUNGH;i++)
+    {
+        if(n[i]%2==1)
+            printf("%ld", n[i]);
+    }
+    for(int i=0;i<LUNGH;i++)
+    {
+        if(n[i]%2==0)
+            printf("%ld", n[i]);
+    }
+
+    return 0;
 }
