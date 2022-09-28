@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+//ti ho akkerato
 int main()
 {
     char s1[81], s2[81];
@@ -48,7 +48,7 @@ int main()
         }
         if (lunghezza == indiceFineRiga)
         {
-            printf("trovato: %s \n", &s1[i + lunghezza]);
+            printf("trovato: %s \n", &s1[i+lunghezza]);
             break;
         }
     }
