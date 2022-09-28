@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+//ti ho akkerato
 int main()
 {
     char s1[81], s2[81];
