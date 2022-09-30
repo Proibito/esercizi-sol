@@ -28,10 +28,16 @@ int main()
 
     int somma=0;
     int vettore_2[NUMERI];
-    for(i=NUMERI-1;i>=0;i++)
+    for(i=NUMERI-1;i>=0;i--)
     {
         vettore_2[i]=somma+vettore[i];
         somma = somma + vettore[i];
+    }
+
+    printf("\nVettore finale:\n");
+    for(i=0;i<NUMERI;i++)
+    {
+        printf("%d\n", vettore_2[i]);
     }
 
     fclose(fp);
