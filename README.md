@@ -1,8 +1,3 @@
 # Eserici di sistemi operativi 🦾🧑‍🏫🧑‍💻💻
 
-:) ❤️. -__- 😁 . prova
-fjejfea
-
-ciao
-
-cuai
+:) ❤️. -__- 😁 . Oddio finalmente ho configurato tutto sono fortissima. Evviva🥳

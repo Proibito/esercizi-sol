@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<math.h>
 
+// ti sto modificando il file
+
 int main()
 {
     double n;
