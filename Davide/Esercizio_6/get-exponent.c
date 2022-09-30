@@ -2,6 +2,11 @@
 #include<math.h>
 #include <string.h>
 
+// ti sto modificando il file
+
+
+// ecco qui
+
 int main()
 {
     double n;
