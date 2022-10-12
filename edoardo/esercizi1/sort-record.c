@@ -35,7 +35,7 @@ record *rec_rand_create(int n)
             continue;
         }
         ritorno[i].name = randomStringa;
-        del
+        // del
     }
     return ritorno;
 }
