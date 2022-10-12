@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-//Nota:   se il numero di asterischi da stampare non sarebbe intero, verranno stampati gli asterischi approssimati per difetto
+//sembra funzioni tutto
 
 int main()
 {
@@ -18,14 +18,10 @@ int main()
     for(i=0;i<altezza;i++)
     {
         printf("*");
-        for(j=1;j<=(base-1)*(i)/(altezza-1);j++)
+        for(j=1;j<=(base-1)/(altezza-1)*(i);j++)
         {
             printf("*");
         }
-        /*if((float)(base-1)*(i)/(altezza-1)-j>0.5)     ho tentato di migliorare l'approssimazione ma non ci sono riuscito
-        {
-            printf("*");
-        }*/
         printf("\n");
     }
 
