@@ -3,3 +3,5 @@
 
 CppProperties.json
 a.out
+
+*/*/*.a
