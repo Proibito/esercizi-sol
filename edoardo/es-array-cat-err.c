@@ -5,16 +5,18 @@ int main()
 {
 	//	char v1[10] = "Prima,";
 	char v1[10] = {
-		'P',
-		'r',
-		'i',
-		'm',
-		'a',
-		',',
-		0,
+			'P',
+			'r',
+			'i',
+			'm',
+			'a',
+			',',
+			0,
 	};
 	char v2[10] = " dopo";
 	int len1, len2, i;
+
+// https://stackoverflow.com/a/9219752/11642086 const i
 
 	/* Lunghezza delle due stringhe */
 	len1 = sizeof(v1);
