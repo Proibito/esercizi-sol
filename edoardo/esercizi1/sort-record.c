@@ -87,8 +87,9 @@ void rec_free(record *v, int n)
 int main()
 {
     record *prova;
-    int lunghezza = 5;
+    int lunghezza = 15;
     prova = rec_rand_create(lunghezza);
+    printf("%s\n", prova[0].name);
     // rec_print(prova, lunghezza);
     rec_sort(prova, lunghezza);
     printf("dopo l'ordine \n");
