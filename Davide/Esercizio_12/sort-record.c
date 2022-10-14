@@ -20,17 +20,18 @@ record * rec_rand_create(int n)
     for(i=0;i<n;i++)
     {
         int lunghezza_stringa_generata = (rand()%MAX_LEN)+1;
-        char stringa_generata[lunghezza_stringa_generata];
+        //char stringa_generata[lunghezza_stringa_generata];
+        elenco[i].name = malloc(sizeof(char)*(lunghezza_stringa_generata+1));
         //printf("\nLunghezza stringa %d: %d oppure %d o anche %d", i, strlen(stringa_generata), sizeof(*stringa_generata)/sizeof(char), lunghezza_stringa_generata);
-        for(j=0;j<lunghezza_stringa_generata-1;j++)
+        for(j=0;j<lunghezza_stringa_generata;j++)
         {
-            stringa_generata[j] = (char)(rand()%25+97);
+            elenco[i].name[j]= (char)(rand()%25+97);
         }
-        stringa_generata[j+1] = '\0';
-        printf("\nStringa: %s\n", stringa_generata);
+        elenco[i].name[j] = '\0';
+        printf("\nStringa: %s\n", elenco->name);
 
         elenco[i].age = rand()%(MAX_AGE-MIN_AGE)+MIN_AGE;
-        elenco[i].name = stringa_generata;
+        //elenco[i].name = stringa_generata;
     }
     return elenco;
 }
