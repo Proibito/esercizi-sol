@@ -12,30 +12,24 @@ typedef struct
 
 record *rec_rand_create(int n)
 {
-    record *ritorno = malloc(sizeof(record)*n);
+    record *ritorno = malloc(sizeof(*ritorno) * n);
     int i = 0;
     for (; i < n; i++)
     {
-        int lunghezzaStringa = (rand() % (MAX_LEN - 1) + 1) + 1;
+        int lunghezzaStringa = rand() % ((MAX_LEN + 1) + 1);
         char randomStringa[lunghezzaStringa];
-        printf("valore: %d\n", &randomStringa);
         // Inzializzo la stringa
         int k = 0;
         for (; k < lunghezzaStringa - 1; k++)
         {
-            char carattereBOH = rand() % (90 - 65 + 1) + 65;
+            char carattereBOH = (rand() % (90 - 65 + 1) + 65);
             randomStringa[k] = carattereBOH;
         }
         randomStringa[lunghezzaStringa - 1] = '\0';
+        printf("%s\n", randomStringa);
 
         ritorno[i].age = rand() % (MAX_AGE - MIN_AGE + 1) + MIN_AGE;
-        if (i == 1)
-        {
-            ritorno[i].name = "questo";
-            continue;
-        }
         ritorno[i].name = randomStringa;
-        // del
     }
     return ritorno;
 }
@@ -70,17 +64,16 @@ void rec_print(record *v, int n)
     int i = 0;
     for (; i < n; i++)
     {
-        printf("stringa casuale: %s, numero casuale: %d\n", v[i].name, v[i].age);
+        printf("stringa casuale: %d, numero casuale: %d\n", v[i].name, v[i].age);
     }
 }
 
 int main()
 {
     record *prova;
-    int lunghezza = 15;
+    int lunghezza = 5;
     prova = rec_rand_create(lunghezza);
-    printf("%s\n", prova[0].name);
-    // rec_print(prova, lunghezza);
+    rec_print(prova, lunghezza);
     rec_sort(prova, lunghezza);
     // rec_print(prova, lunghezza);
 }
