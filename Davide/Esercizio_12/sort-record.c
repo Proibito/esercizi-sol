@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-#define MAX_LEN 10
+#define MAX_LEN 15
 #define MIN_AGE 1
 #define MAX_AGE 99
-#define RAND_MAX 122-97
 
 typedef struct
 {
@@ -14,22 +14,25 @@ typedef struct
 
 record * rec_rand_create(int n)
 {
-    record elenco[n];
+    record *elenco = malloc(sizeof(record)*n);
     int i, j=0;
-    char stringa_generata[MAX_LEN+1];       //+1 per lo \0
+    
     for(i=0;i<n;i++)
     {
-        
-        for(j=0;j<MAX_LEN;j++)
+        int lunghezza_stringa_generata = (rand()%MAX_LEN)+1;
+        char stringa_generata[lunghezza_stringa_generata];
+        //printf("\nLunghezza stringa %d: %d oppure %d o anche %d", i, strlen(stringa_generata), sizeof(*stringa_generata)/sizeof(char), lunghezza_stringa_generata);
+        for(j=0;j<lunghezza_stringa_generata-1;j++)
         {
-            stringa_generata[j] = (char)(rand()+97);
+            stringa_generata[j] = (char)(rand()%25+97);
         }
         stringa_generata[j+1] = '\0';
+        printf("\nStringa: %s\n", stringa_generata);
 
-        elenco[n].age = rand()+MAX_AGE-MIN_AGE;
-        elenco[n].name = stringa_generata;
+        elenco[i].age = rand()%(MAX_AGE-MIN_AGE)+MIN_AGE;
+        elenco[i].name = stringa_generata;
     }
-    return &elenco;
+    return elenco;
 }
 
 int main()
@@ -42,4 +45,13 @@ int main()
 
     record * elenco;
     elenco = rec_rand_create(numero);
+
+    int i;
+    printf("\nElenco");
+    for(i=0;i<numero;i++)
+    {
+        printf("\nElemento %d\tNome: %s\t\tEta': %d", i, elenco[i].name, elenco[i].age);
+    }
+    
+    return 0;
 }
