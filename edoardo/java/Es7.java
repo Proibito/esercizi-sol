@@ -25,6 +25,6 @@ public class Es7 {
     }
 
     public static void main(String[] args) {
-        System.out.println(scan("edoaldo", "edoardo") ? "ok" : "nope");
+        System.out.println(scan("edoaldo", "edoardo") ? "OK" : "nope");
     }
 }
