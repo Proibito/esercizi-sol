@@ -28,12 +28,37 @@ record * rec_rand_create(int n)
             elenco[i].name[j]= (char)(rand()%25+97);
         }
         elenco[i].name[j] = '\0';
-        printf("\nStringa: %s\n", elenco->name);
+        //printf("\nStringa: %s\n", elenco->name);
 
         elenco[i].age = rand()%(MAX_AGE-MIN_AGE)+MIN_AGE;
         //elenco[i].name = stringa_generata;
     }
     return elenco;
+}
+
+void rec_sort(record * v, int n)    //ordina gli elementi dell’array v di lunghezza n secondo il campo age crescente
+{
+    int i, j, tutto_a_posto=0;
+    for(j=0;j<n-1;j++)
+    {
+        for(i=0;i<n-1;i++)
+        {
+            if(v[i].age>v[i+1].age)
+            {
+                printf("\nScambia %d e %d\n", v[i].age, v[i+1].age);
+                swap(&v[i], &v[i+1]);
+            }
+        }
+    }
+}
+
+void swap(record *a, record *b)
+{
+    record temporaneo;
+
+    temporaneo = *a;
+    *a = *b;
+    *b = temporaneo;
 }
 
 int main()
@@ -53,6 +78,15 @@ int main()
     {
         printf("\nElemento %d\tNome: %s\t\tEta': %d", i, elenco[i].name, elenco[i].age);
     }
-    
+
+    rec_sort(elenco, numero);
+
+    printf("\n\nElenco ordinato");
+    for(i=0;i<numero;i++)
+    {
+        printf("\nElemento %d\tNome: %s\t\tEta': %d", i, elenco[i].name, elenco[i].age);
+    }
+
+    printf("\n");
     return 0;
 }
