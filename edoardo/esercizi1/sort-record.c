@@ -27,11 +27,6 @@ record *rec_rand_create(int n)
         ritorno[i].name[lunghezzaStringa - 1] = '\0';
 
         ritorno[i].age = rand() % (MAX_AGE - MIN_AGE + 1) + MIN_AGE;
-        if (i == 1)
-        {
-            ritorno[i].name = "questo";
-            continue;
-        }
         // ritorno[i].name = randomStringa;
         // del
     }
@@ -77,17 +72,17 @@ void rec_sort(record *v, int n)
 void rec_free(record *v, int n)
 {
     int i = 0;
-    // for (; i < n; i++)
-    // {
-    // free(v[i].name);
-    // }
+    for (; i < n; i++)
+    {
+        free(v[i].name);
+    }
     free(v);
 }
 
 int main()
 {
     record *prova;
-    int lunghezza = 15;
+    int lunghezza = 2;
     prova = rec_rand_create(lunghezza);
     printf("%s\n", prova[0].name);
     // rec_print(prova, lunghezza);
