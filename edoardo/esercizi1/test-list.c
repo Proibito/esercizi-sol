@@ -9,6 +9,12 @@ typedef struct node
 
 typedef node *list;
 
+typedef struct palla
+{
+	int valore;
+} palla;
+typedef palla *test;
+
 /*
  * Assume that the list is in increasing order and insert the element
  * preserving the increasing order
@@ -41,30 +47,27 @@ void list_print(list p);
 
 void list_free(list p);
 
-int provaa(int *numero)
-{
-	int *ciao = numero;
-	ciao = 232;
-	return *numero;
-}
 
 int main()
 {
 	list head = NULL;
 
-	int a = 5;
-	int b = a;
-	printf("%i \n", b);
+    test prova = malloc(sizeof(int));
+	prova->valore = 45;
+	test cheNeSO = prova;
+	prova->valore = 15;
+
+	printf("%d \n", cheNeSO->valore);
 
 	/* insert some numbers in the list... */
 	head = list_insert_tail(head, 2);
 	head = list_insert_tail(head, 10);
 	head = list_insert_tail(head, 15);
 	head = list_insert_tail(head, 20);
-	printf("%d \n", provaa(23));
+	// printf("%d \n", provaa(23));
 	list_print(head);
-	head = list_insert_ordered(head, 7);
-	list_print(head);
+	// head = list_insert_ordered(head, 7);
+	// list_print(head);
 
 	/* ... and clean everything up  */
 	list_free(head);
