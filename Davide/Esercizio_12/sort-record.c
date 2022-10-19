@@ -45,7 +45,7 @@ void rec_sort(record * v, int n)    //ordina gli elementi dell’array v di lung
         {
             if(v[i].age>v[i+1].age)
             {
-                printf("\nScambia %d e %d\n", v[i].age, v[i+1].age);
+                printf("Scambia %d e %d\n", v[i].age, v[i+1].age);
                 swap(&v[i], &v[i+1]);
             }
         }
@@ -61,6 +61,21 @@ void swap(record *a, record *b)
     *b = temporaneo;
 }
 
+void rec_free(record *v, int n)
+{
+    free (v);
+}
+
+void rec_print(record *v, int n)
+{
+    int i;
+    printf("\n");
+    for(i=0;i<n;i++)
+    {
+        printf("Elemento %d\tNome: %s\t\tEta': %d\n", i, v[i].name, v[i].age);
+    }
+}
+
 int main()
 {
     int numero;
@@ -74,19 +89,14 @@ int main()
 
     int i;
     printf("\nElenco");
-    for(i=0;i<numero;i++)
-    {
-        printf("\nElemento %d\tNome: %s\t\tEta': %d", i, elenco[i].name, elenco[i].age);
-    }
+    rec_print(elenco, numero);
 
     rec_sort(elenco, numero);
 
-    printf("\n\nElenco ordinato");
-    for(i=0;i<numero;i++)
-    {
-        printf("\nElemento %d\tNome: %s\t\tEta': %d", i, elenco[i].name, elenco[i].age);
-    }
+    printf("\nElenco ordinato");
+    rec_print(elenco, numero);
 
     printf("\n");
+    rec_free(elenco, numero);
     return 0;
 }
