@@ -115,6 +115,25 @@ void list_free(list p);
 	free(p);
 }*/
 
+list list_delete_if(list head, int to_delete)
+{
+	list head_backup = head, head_backup_2;
+	int contagiri=0, i;
+	while(head->next!=NULL)
+	{
+		contagiri++;
+		if(head->value==to_delete)
+		{
+			head_backup_2=head;
+			head = head_backup;
+			for(i=0;i<contagiri;i++)
+			{
+				head=head->next;
+			}
+		}
+	}
+}
+
 int main()
 {
 	list head = NULL;
