@@ -117,21 +117,46 @@ void list_free(list p);
 
 list list_delete_if(list head, int to_delete)
 {
-	list head_backup = head, head_backup_2;
+	list head_backup = head, head_temp;
 	int contagiri=0, i;
 	while(head->next!=NULL)
 	{
 		contagiri++;
 		if(head->value==to_delete)
 		{
-			head_backup_2=head;
+			head_temp=head;
 			head = head_backup;
-			for(i=0;i<contagiri;i++)
+			for(i=0;i<contagiri-2;i++)
 			{
 				head=head->next;
 			}
+			if(head->next->next == NULL)
+				head->next = NULL;
+			else
+				head->next = head->next->next;
+
+			free(head_temp);
+			return head_backup;
 		}
+		head = head->next;
 	}
+
+	//ripeto il giro ancora una volta
+	contagiri++;
+	if(head->value==to_delete)
+	{
+		head_temp=head;
+		head = head_backup;
+		for(i=0;i<contagiri-2;i++)
+		{
+			head=head->next;
+		}
+		head->next = NULL;
+
+		free(head_temp);
+	}
+
+	return head_backup;
 }
 
 int main()
@@ -144,6 +169,10 @@ int main()
 	head = list_insert_head(head, 15);
 	/* ... print them... */
 	list_print(head);
+
+	head = list_delete_if(head, 15);		//Rimuovi
+	list_print(head);					//Stampa
+
 	/* ... and clean everything up  */
 	list_free(head);
 
@@ -187,10 +216,10 @@ void list_free(list p)
 	/* First deallocate (recursively) the next nodes... */
 	list_free(p->next);
 	/* ... then deallocate the node itself */
-	free(p);
+	free(p);			//Ho dovuto commentare altrimenti mi dava un errore
 }
 
-list list_delete_if(list head, int to_delete)
+/*list list_delete_if(list head, int to_delete)
 {
 	list head_backup = head;
 
@@ -207,4 +236,4 @@ list list_delete_if(list head, int to_delete)
 		}
 	}
 	head->next = head->next->next;
-}
+}*/
