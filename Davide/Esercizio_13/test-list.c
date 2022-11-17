@@ -8,10 +8,8 @@ typedef struct node {
 
 typedef node* list;
 
-/*
- * Assume that the list is in increasing order and insert the element
- * preserving the increasing order
- */
+list list_delete_odd(list head);
+
 list list_insert_ordered(list p, int val)
 {
 	node nuovo;
@@ -36,9 +34,6 @@ list list_insert_ordered(list p, int val)
 	
 }
 
-/*
- * Concatenate two lists
- */
 list list_cat(list before, list after)
 {
 	list before_backup = before;
@@ -51,116 +46,80 @@ list list_cat(list before, list after)
 	return before_backup;
 }
 
-/*
- * Insert elements at the head of the list
- */
 list list_insert_head(list p, int val);
-/*{
-	node nuovo;
-	nuovo.value = val;
-	nuovo.next = p;
-	return &nuovo;
-}*/
 
-/*
- * Insert elements at the tail of the list
- */
 list list_insert_tail(list p, int val)
 {
-	node nuovo;
-	list p_backup = p;
-	nuovo.value = val;
-	nuovo.next = NULL;
-	for(;p->next != NULL;p = p->next)
-	{}
-
-	p->next = &nuovo;
+	 
+	if(p->next != NULL)
+	{
+		list_insert_tail(p->next, val);
+	}
+	else
+	{
+		list list_end = malloc(sizeof(*list_end));
+		list_end->value = val;
+		p->next = list_end;
+	}
 
 	return p;
 }
 
-/*
- * Print the list content
- */
 void list_print(list p);
-/*{
-	printf("Stampa della lista:\n");
-	if(p==NULL)
-	{
-		printf("La lista è vuota.\n");
-		return;
-	}
-	else
-	{
-		printf("%d\n", p->value);
-	}
-
-	while(p->next != NULL)
-	{
-		printf("%d\n", p->value);
-		p = p->next;
-	}
-
-	printf("%d\n", p->value);
-
-	return;		//inutile ma mi sembrava ordinato metterlo
-}*/
-
-/*
- * Free the list
- */
 
 void list_free(list p);
-/*{
-	free(p);
-}*/
 
 list list_delete_if(list head, int to_delete)
 {
-	list head_backup = head, head_temp;
-	int contagiri=0, i;
-	while(head->next!=NULL)
+	printf("Elimino elemento %d\n", to_delete);
+	if(head == NULL)
 	{
-		contagiri++;
+		return NULL;
+	}
+	else
+	{
+		if(head->value != to_delete)
+		{
+			list newNode;
+			newNode = malloc(sizeof(*newNode));
+			newNode->value = head->value;
+			newNode->next = list_delete_if(head->next, to_delete);
+			return newNode;
+		}
+		else
+		{
+			list next = head->next;
+			free(head);
+			return next;
+		}
+	}
+
+
+	//VERSIONE NON RICORSIVA CHE HA DEI PROBLEMI
+	/*list head_backup = head;
+	while(head->next!=NULL)			//PROBLEMA IN QUESTO BLOCCO
+	{									//non riesco a trovare la condizione corretta per la rimozione del valore finale della lista
 		if(head->value==to_delete)
 		{
-			head_temp=head;
-			head = head_backup;
-			for(i=0;i<contagiri-2;i++)
-			{
-				head=head->next;
-			}
-			if(head->next->next == NULL)
-				head->next = NULL;
-			else
-				head->next = head->next->next;
-
-			free(head_temp);
+			*head = *head->next;
+			
+			//free()
 			return head_backup;
 		}
 		head = head->next;
 	}
 
-	//ripeto il giro ancora una volta
-	contagiri++;
-	if(head->value==to_delete)
-	{
-		head_temp=head;
-		head = head_backup;
-		for(i=0;i<contagiri-2;i++)
-		{
-			head=head->next;
-		}
-		head->next = NULL;
-
-		free(head_temp);
-	}
-
-	return head_backup;
+	return head_backup;*/
 }
+
+list list_cut_below(list head, int cut_value);
+
+list list_dup(list head);
 
 int main()
 {
+	int limit = 12;		//Modificabile
+	node* old_pointer, *new_pointer;
 	list head = NULL;
 
 	/* insert some numbers in the list... */
@@ -171,7 +130,53 @@ int main()
 	list_print(head);
 
 	head = list_delete_if(head, 15);		//Rimuovi
+	head = list_delete_if(head, 2);		//Rimuovi
 	list_print(head);					//Stampa
+
+	printf("\nRESET\nRimozione elementi in posizione dispari\n");
+	head = NULL;
+	head = list_insert_head(head, 24);
+	head = list_insert_head(head, 10);
+	head = list_insert_head(head, 2);
+	head = list_insert_head(head, 15);
+	head = list_insert_head(head, 18);
+	list_print(head);
+	head=list_delete_odd(head);
+	list_print(head);
+
+	printf("\nRESET\nRimozione elementi di valore inferiore al valore %d\n", limit);
+	head = NULL;
+	head = list_insert_head(head, 24);
+	head = list_insert_head(head, 10);
+	head = list_insert_head(head, 2);
+	head = list_insert_head(head, 15);
+	head = list_insert_head(head, 18);
+	list_print(head);
+	head=list_cut_below(head, limit);
+	list_print(head);
+
+	printf("\nRESET\nDuplicazione lista\n");
+	head = NULL;
+	head = list_insert_head(head, 24);
+	head = list_insert_head(head, 10);
+	head = list_insert_head(head, 2);
+	head = list_insert_head(head, 15);
+	head = list_insert_head(head, 18);
+	list_print(head);
+	old_pointer = (head);
+	head = list_dup(head);
+	new_pointer  = (head);
+	list_print(head);
+	printf("\nVerifica duplicazione: ");
+	if(old_pointer != new_pointer)
+	{
+		printf(" CORRETTO\n");
+	}
+	else
+	{
+		printf(" NON CORRETTO\n");
+	}
+
 
 	/* ... and clean everything up  */
 	list_free(head);
@@ -237,3 +242,76 @@ void list_free(list p)
 	}
 	head->next = head->next->next;
 }*/
+
+list list_delete_odd(list head)
+{
+	list newList;
+	if(head != NULL)
+	{
+		head = head->next;
+		if(head != NULL)
+		{
+			newList = malloc(sizeof(*newList));
+			newList->value = head->value;
+			head = head->next;
+			newList->next = list_delete_odd(head);
+			return newList;
+		}
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+list list_cut_below(list head, int cut_value)
+{
+	if(head == NULL)
+	{
+		return NULL;
+	}
+	else
+	{
+		if(head->value >= cut_value)
+		{
+			list newNode;
+			newNode = malloc(sizeof(*newNode));
+			newNode->value = head->value;
+			newNode->next = list_cut_below(head->next, cut_value);
+			return newNode;
+		}
+		else
+		{			//DA RISOLVERE... C'è un problema
+			list next = head->next;
+			return list_cut_below(head->next, cut_value);
+			
+			}
+	}
+}
+
+list list_dup(list head)
+{
+	/*list newList;
+	newList = malloc(sizeof(*newList));
+	//newList->next = NULL;
+	while (head!=NULL)
+	{
+		newList = list_insert_tail(newList, head->value);
+		head = head->next;
+	}
+	
+	printf("Risultato duplicazione:\n");
+	list_print(newList);
+	return newList;*/
+
+	if(head==NULL)
+	{
+		return NULL;
+	}
+	
+	list newList = malloc(sizeof(*newList));
+	newList->value = head->value;
+	newList->next = list_dup(head->next);
+	return newList;
+	
+}
