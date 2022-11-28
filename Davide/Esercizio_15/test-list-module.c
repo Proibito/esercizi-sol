@@ -16,7 +16,7 @@ int main()
 	head2 = list_insert_ordered(head2, 4);
 	head2 = list_insert_ordered(head2, 3);
 	head2 = list_insert_head(head2, 700);
-	head2 D:\File_personali\Universita UNITO\Sistemi Operativi\Laboratorio\GIT Hub\esercizi-sol\Davide\Esercizio_15= list_insert_tail(head2, 1);
+	head2 = list_insert_tail(head2, 1);
 	head2 = list_insert_tail(head2, 7);
 
 

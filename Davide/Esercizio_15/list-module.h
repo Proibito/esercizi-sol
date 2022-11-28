@@ -1,8 +1,11 @@
 #ifndef MODULE_LIST_1
 #define MODULE_LIST_1
 
+/* Dichiarazione tipo list */
 typedef struct node* list;
 
+/*  Dichiarazione delle funzioni utilizzate nel file test-list-module.
+    Corpo delle funzioni presente in list-module.c */
 list list_delete_if(list head, int to_delete);
 list list_delete_odd(list head);
 list list_cut_below(list head, int cut_value);

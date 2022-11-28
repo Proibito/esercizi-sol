@@ -1,5 +1,7 @@
 #include "list-module.h"
+
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct node {
 	int value;
@@ -95,23 +97,23 @@ list list_insert_ordered(list p, int val)
 {
 	node nuovo;
 	nuovo.value = val;
-	//nuovo.next = NULL;
+	/*nuovo.next = NULL;*/
 
 	list temp = p;
-	while(temp->value <= nuovo.value)		//Finchè il valore del nodo è minore o uguale al valore da inserire...
+	while(temp->value <= nuovo.value)		/*Finchè il valore del nodo è minore o uguale al valore da inserire...*/
 	{
-		temp = temp->next;					//...continuo a spostarmi nella lista.
+		temp = temp->next;					/*...continuo a spostarmi nella lista.*/
 	}
 
-	if(temp->next == NULL)			//Se sono al fondo della lista...
+	if(temp->next == NULL)			/*Se sono al fondo della lista...*/
 	{
-		nuovo.next = NULL;			//...
+		nuovo.next = NULL;			/*...*/
 	}
-	else							//...oppure...
+	else							/*...oppure...*/
 	{
-		nuovo.next = temp->next->next;//...
+		nuovo.next = temp->next->next;/*...*/
 	}
-	temp->next = &nuovo;	//lego o inserisco il nodo nella lista
+	temp->next = &nuovo;	/*lego o inserisco il nodo nella lista*/
 	
 }
 
@@ -119,7 +121,7 @@ list list_cat(list before, list after)
 {
 	list before_backup = before;
 
-	while(before->next != NULL)	//Scorro la 
+	while(before->next != NULL)	/*Scorro la */
 		before = before->next;
 
 	before->next = after;
@@ -167,7 +169,7 @@ void list_free(list p)
 	/* First deallocate (recursively) the next nodes... */
 	list_free(p->next);
 	/* ... then deallocate the node itself */
-	free(p);			//Ho dovuto commentare altrimenti mi dava un errore
+	free(p);			/*Ho dovuto commentare altrimenti mi dava un errore*/
 }
 
 void list_print(list p)
