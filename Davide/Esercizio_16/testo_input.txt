@@ -1,0 +1,4 @@
+Testo di esempio
+Frase numero 2
+Frase terza
+Quarta frase
