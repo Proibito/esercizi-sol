@@ -1,87 +1,123 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 /*
-    Sample per fgets
-    fgets(stringa, sizeof(stringa), stdin);
+	Sample per fgets
+	fgets(stringa, sizeof(stringa), stdin);
 */
 
 typedef struct element
 {
-    char* string;
-    struct element* next;
+	char string[100];
+	struct element* next;
 }element;
 
 typedef element * list;
-
 element* seek(list head, int position);
+void erase_element(list head, int position);
 
 int list_element_counter(list head);
 
 int main(int argc, char* argv[])
 {
-    FILE * fp_1;
-    FILE * fp_2;
-    list head, head_backup;
-    int list_length;
-    srand(time(0));
+	FILE *fp_1, *fp_2;
+	list head, head_backup;
+	int list_length, pick;
+	element *temp_element;
+	srand(time(0));
 
-    fp_1 = fopen(argv[1], "r");
-    fp_2 = fopen(argv[2], "w");
-    head = NULL;
+	fp_1 = fopen(argv[1], "r");
+	fp_2 = fopen(argv[2], "w");
+	head = NULL;
 
-    /* RICEZIONE */
-    /* Salvataggio all'interno di una lista. */
-    head = malloc(sizeof(element));
-    head_backup = head;
-    printf("Stringa head->string \"%s\"\n", head->string);
-    while(fscanf(fp_1, "%s", head->string) >0)
-    {
-        printf("Stringa head->string \"%s\"", head->string);
-        head->next = malloc(sizeof(element));
-        head->next->next = NULL;        /* Forse superfluo */
-        head = head->next;
-    }
-    printf("\nFine del file raggiunta.");
-    head = head_backup;
+	/* RICEZIONE */
+	/* Salvataggio all'interno di una lista. */
+	head = malloc(sizeof(*head));
+	head_backup = head;
+	while(fgets(head->string, sizeof(head->string), fp_1) != NULL)
+	{
+		printf("Stringa head->string: %s", head->string);
+		head->next = malloc(sizeof(*head));
+		head->next->next = NULL;        /* Forse superfluo */
+		head = head->next;
+	}
 
-    /* LOOP DI COPIATURA */
-    /* Con un loop fino allo svuotamento della lista scegliamo un elemento della lista e lo stampiamo nel file. */
-    if(head == NULL)
-    {
-        printf("\nIl file non conteneva stringhe.\nNessuna stringa è stata copiata nel secondo file.");
-    }
-    while(head!=NULL)
-    {
-        list_length = list_element_counter(head);
-        fprintf(fp_2, seek(head, rand()%list_length)->string);
-    }
-    printf("\nCopia stringhe completata.");
-    
-    fclose(fp_1);
-    fclose(fp_2);
+	printf("\nFine del file raggiunta.\n");
+	head = head_backup;
 
-    return 0;
+	/* LOOP DI COPIATURA */
+	/* Con un loop fino allo svuotamento della lista scegliamo un elemento della lista e lo stampiamo nel file. */
+	if(head == NULL)
+	{
+		printf("\nIl file non conteneva stringhe.\nNessuna stringa è stata copiata nel secondo file.");
+		return -1;    
+	} 
+	while(head!=NULL) 
+	{
+		list_length = list_element_counter(head); 
+		if(list_length <= 0) break;
+		pick = rand()%(list_length);
+		head = seek(head, pick);
+		fputs(head->string, fp_2);
+
+/*      ELIMINAZIONE ELEMENTO DELLA LISTA       */
+		if(head == head_backup)     /*Se siamo al primo elemento della lista...*/
+		{
+			temp_element = head_backup;
+			head_backup = head_backup->next;
+			//free(temp_element->string);
+			free(temp_element);
+		}
+		else                        /*... oppure se non siamo al primo elemento...*/
+		{
+			temp_element = head_backup;
+			while (temp_element -> next != head)
+			{
+				temp_element = temp_element->next;
+			}
+			temp_element->next = temp_element->next->next;
+		}
+
+
+		head = head_backup;
+	}
+	printf("Copia stringhe completata.\n");
+
+	fclose(fp_1);
+	fclose(fp_2);
+
+	return 0;
 }
 
 element* seek(list head, int position)
 {
-    int i;
-    for(i=0;i<=position;i++)
-    {
-        head = head->next;
-    }
-    return head;
+	int i;
+	for(i=0;i<position;i++)
+	{
+		head = head->next;
+	}
+	return head;
 }
 
 int list_element_counter(list head)
 {
-    int counter;
-    counter = 0;
-    while(head!=NULL)
-    {
-        counter++;
-    }
-    return counter;
+	int counter;
+	counter = 0;
+	while(head!=NULL)
+	{
+		counter++;
+		head = head->next;
+	}
+	return counter-1;
 }
 
+void erase_element(list head, int position)
+{
+	element * temp;
+	temp = seek(head, position);
+
+	temp = seek(head, position)->next;
+
+	free(temp);
+}
