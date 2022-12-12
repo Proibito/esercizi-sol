@@ -14,7 +14,7 @@ typedef struct element
 }element;
 
 typedef element * list;
-element* seek(list head, int position);
+element* list_seek(list head, int position);
 void erase_element(list head, int position);
 
 int list_element_counter(list head);
@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 		list_length = list_element_counter(head); 
 		if(list_length <= 0) break;
 		pick = rand()%(list_length);
-		head = seek(head, pick);
+		head = list_seek(head, pick);
 		fputs(head->string, fp_2);
 
 /*      ELIMINAZIONE ELEMENTO DELLA LISTA       */
@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-element* seek(list head, int position)
+element* list_seek(list head, int position)
 {
 	int i;
 	for(i=0;i<position;i++)
@@ -115,9 +115,9 @@ int list_element_counter(list head)
 void erase_element(list head, int position)
 {
 	element * temp;
-	temp = seek(head, position);
+	temp = list_seek(head, position);
 
-	temp = seek(head, position)->next;
+	temp = list_seek(head, position)->next;
 
 	free(temp);
 }
