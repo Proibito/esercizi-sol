@@ -27,8 +27,14 @@ int main(int argc, char* argv[])
 	element *temp_element;
 	srand(time(0));
 
-	fp_1 = fopen(argv[1], "r");
-	fp_2 = fopen(argv[2], "w");
+	if(fp_1 = fopen(argv[1], "r")==NULL)
+	{
+		fprintf(stderr, "Errore di apertura del file di nome: %s\n", argv[1]);
+	}
+	if(fp_2 = fopen(argv[2], "w"))
+	{
+		fprintf(stderr, "Errore di apertura del file di nome: %s\n", argv[2]);
+	}
 	head = NULL;
 
 	/* RICEZIONE */
@@ -43,7 +49,7 @@ int main(int argc, char* argv[])
 		head = head->next;
 	}
 
-	printf("\nFine del file raggiunta.\n");
+	printf("Fine del file raggiunta.\n");
 	head = head_backup;
 
 	/* LOOP DI COPIATURA */
@@ -82,7 +88,9 @@ int main(int argc, char* argv[])
 
 		head = head_backup;
 	}
-	printf("Copia stringhe completata.\n");
+	printf("\nCopia stringhe completata.\n");
+
+	fflush(NULL);
 
 	fclose(fp_1);
 	fclose(fp_2);
