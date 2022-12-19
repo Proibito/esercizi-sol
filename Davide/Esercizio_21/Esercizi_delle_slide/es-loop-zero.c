@@ -79,7 +79,8 @@ int main(int argc, char const *argv[])
 	/* Forking kids */
 	for (i = 0; i < n_kids; i++) {
 		children[i] = fork();
-		if (children[i] == 0) {
+		if (children[i] == 0) 
+		{
 			free(children);     /* Freeing useless array in child*/
 			n_kids = 0;   /* Used to distinguish child processes */
 			break;             /* Exit for loop if child process */
