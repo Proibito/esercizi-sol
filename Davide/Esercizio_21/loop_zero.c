@@ -9,7 +9,13 @@
 #include <sys/wait.h>
 #include <errno.h>
 
-
+#define TEST_ERROR    if (errno) {fprintf(stderr, \
+					   "%s:%d: PID=%5d: Error %d (%s)\n",\
+					   __FILE__,\
+					   __LINE__,\
+					   getpid(),\
+					   errno,\
+					   strerror(errno));}
 
 void signal_handler (int signum );
 
@@ -38,24 +44,22 @@ int main(int args, char const* argv[])
     pid_list = calloc(n_child, sizeof(pid_t));
 
     bzero(&sa_sigusr1, sizeof(sa_sigusr1));
-    //-----------<<
-    
+    sa_sigusr1.sa_handler = SIG_IGN;        /* Per ora ignora il segnale. */
+    sigaction(SIGUSR1, &sa_sigusr1, NULL);
     
 
     printf("Inizio creazione figli\n");
     for(i=0; i<n_child; i++)
     {
+		TEST_ERROR;
 	    pid_list[i] = fork();
+		TEST_ERROR;
         if(pid_list[i] == 0)
         {       /* Caso figlio */
-                //free(pid_list);
+                free(pid_list);
                 n_child = 0;        /* Per uscire dal for al prossimo giro */
         }
 	}
-    
-    //--------------->>
-    sa_sigusr1.sa_handler = SIG_IGN;        /* Per ora ignora il segnale. */
-    sigaction(SIGUSR1, &sa_sigusr1, NULL);
 
     if(active_childs)
     {       /* Attivazione di SIGUSR1*/
@@ -76,6 +80,7 @@ int main(int args, char const* argv[])
     }
 
     printf("Raggiunto il fondo del programma\n");
+	free(pid_list);
     return(1);
 
 }
@@ -85,7 +90,7 @@ void signal_handler (int signum)
 {
     int pid_pick;
 
-    static int sigusr1_calls=0;     /* Service: per contare quante chiamate ho fatto */
+    static int sigusr1_calls=0;     /* Per contare quante chiamate ho fatto */
     sigusr1_calls++;
 
     //printf("Ricevuto il segnale %s", strsignal(signum));
@@ -97,11 +102,12 @@ void signal_handler (int signum)
         {
             if(waitpid(pid_list[pid_pick], NULL, 0) == -1)
             {
-                printf("Errore durante SIGTERM\n");
+				write(1, "Errore durante SIGTERM\n", 23);		//printf("Errore durante SIGTERM\n");
             }
             pid_list[pid_pick] = pid_list[active_childs-1];
             active_childs--;
             printf("%d  said SIGTERM --> %d\n", pid_list[pid_pick], getpid());
+			write(1, "%d said SIGTERM --> %d\n", pid_list[pid_pick], getpid(), sizeof((int)pid_list[pid_pick])+19+sizeof((int)getpid()));
         }
     }
     if(active_childs == 0)

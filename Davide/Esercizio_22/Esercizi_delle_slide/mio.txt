@@ -1,0 +1,2 @@
+Printing to stdout
+Printing to out_fd
